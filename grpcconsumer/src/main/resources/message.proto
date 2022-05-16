@@ -1,0 +1,15 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.grpc.grpcconsumer;
+
+message MessageRequest {
+  string message = 1;
+}
+
+message MessageResponse {
+  string messageResponse = 1;
+}
+
+service MessageService {
+  rpc hello(MessageRequest) returns (MessageResponse);
+}

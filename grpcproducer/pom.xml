@@ -28,6 +28,28 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-netty</artifactId>
+			<version>1.46.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-protobuf</artifactId>
+			<version>1.46.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-stub</artifactId>
+			<version>1.46.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.grpc/protoc-gen-grpc-java -->
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>protoc-gen-grpc-java</artifactId>
+			<version>1.46.0</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -35,6 +57,13 @@
 	</dependencies>
 
 	<build>
+		<extensions>
+			<extension>
+				<groupId>kr.motd.maven</groupId>
+				<artifactId>os-maven-plugin</artifactId>
+				<version>1.6.1</version>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -47,6 +76,34 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.os72</groupId>
+				<artifactId>protoc-jar-maven-plugin</artifactId>
+				<version>3.11.4</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<protocArtifact>com.google.protobuf:protoc:3.0.0</protocArtifact>
+							<inputDirectories>
+								<include>src/main/resources</include>
+							</inputDirectories>
+							<outputTargets>
+								<outputTarget>
+									<type>java</type>
+								</outputTarget>
+								<outputTarget>
+									<type>grpc-java</type>
+									<pluginArtifact>io.grpc:protoc-gen-grpc-java:1.0.1</pluginArtifact>
+								</outputTarget>
+							</outputTargets>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
